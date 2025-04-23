@@ -1,36 +1,85 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Mood-Based Music Recommender
 
-## Getting Started
+## Overview
 
-First, run the development server:
+This project is a web application that recommends music based on the user's mood. It is built using Next.js and deployed on Render.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Features
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+* **Mood-Based Recommendations:** Users can select their mood, and the app will suggest relevant music.
+* **Next.js Framework:** The application is built using Next.js for server-side rendering and improved performance.
+* **Render Deployment:** The application is deployed on Render, a cloud hosting platform, for easy accessibility.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Technologies Used
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+* Next.js
+* React
+* JavaScript
+* HTML
+* CSS
+* Render
 
-## Learn More
+## Deployment
 
-To learn more about Next.js, take a look at the following resources:
+The application is deployed on Render and can be accessed via the following link:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+[Live Render Link](https://moodify-app-x011.onrender.com)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Prerequisites
 
-## Deploy on Vercel
+Before running the application locally, ensure you have the following installed:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+* Node.js
+* npm or Yarn
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Installation
+
+1.  Clone the repository:
+
+    ```bash
+    git clone [https://github.com/sadnyani-4/moodify-music-app.git](https://github.com/sadnyani-4/moodify-music-app.git)
+    ```
+
+2.  Navigate to the project directory:
+
+    ```bash
+    cd your-repo-name
+    ```
+
+3.  Install dependencies:
+
+    ```bash
+    npm install
+    # or
+    yarn install
+    ```
+
+## Running the Application
+
+1.  Start the development server:
+
+    ```bash
+    npm run dev
+    # or
+    yarn dev
+    ```
+
+2.  Open your browser and visit `http://localhost:3000` to view the application.
+
+## Deployment on Render
+
+The application is deployed on Render using the following steps:
+
+1.  The Next.js application is configured for static export by setting `output: 'export'` in `next.config.js`.
+2.  The `package.json` build script is set to `next build`.
+3.  A Render static site is created, connected to the GitHub repository.
+4.  The build command is set to `npm run build` (or `yarn build`).
+5.  The publish directory is set to `out`.
+
+## Contributing
+
+Contributions are welcome! If you have any suggestions or find any issues, please feel free to open a pull request or submit an issue.
+
+## Author
+
+Sadnyani
