@@ -121,8 +121,7 @@ export default function Home() {
                         rel="noopener noreferrer"
                         className="text-purple-600 hover:text-purple-500 flex items-center space-x-1 text-sm"
                       >
-                        <Image src="/spotify-icon.svg" alt="Spotify" width={16} height={16} />
-                        <span>Open</span>
+                        <Image src="/spotify-icon.svg" alt="Spotify" width={20} height={20} />
                       </a>
                     </td>
                   </tr>
