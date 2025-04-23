@@ -1,8 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig = {
-  output: 'export', // Keep this for static export
-  // basePath: '/moodify-music-app', // Comment this out or remove it for local development
+  output: 'export', // Keep this for static export, Render can also serve this
   images: {
     unoptimized: true,
   },
