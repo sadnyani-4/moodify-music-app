@@ -15,17 +15,17 @@ interface MusicData {
   danceability: number;
   loudness: number;
   speechiness: number;
-  [key: string]: any;
+  // Removed: [key: string]: unknown;
 }
 
 const INITIAL_LOAD_LIMIT = 15;
 
 const moodsConfig = [
-  { name: 'Joy', imageSrc: '/joy.png', filter: (song: MusicData) => song.valence > 0.7 && song.energy > 0.6 && song.tempo > 120 && song.acousticness < 0.4 && song.danceability > 0.5 },
-  { name: 'Sadness', imageSrc: '/sadness.png', filter: (song: MusicData) => song.valence < 0.3 && song.energy < 0.4 && song.tempo < 100 && song.acousticness > 0.6 && song.loudness < -8 },
-  { name: 'Anger', imageSrc: '/anger.png', filter: (song: MusicData) => song.valence < 0.4 && song.energy > 0.7 && song.loudness < -5 && song.tempo > 110 && song.speechiness > 0.3 },
-  { name: 'Fear', imageSrc: '/fear.png', filter: (song: MusicData) => song.valence < 0.5 && song.energy > 0.5 && song.speechiness > 0.2 && song.tempo > 115 },
-  { name: 'Disgust', imageSrc: '/disgust.png', filter: (song: MusicData) => song.valence < 0.4 && song.energy < 0.5 && song.acousticness > 0.5 && song.danceability < 0.4 },
+  { name: 'Joy', imageSrc: '/moodify-music-app/joy.png', filter: (song: MusicData) => song.valence > 0.7 && song.energy > 0.6 && song.tempo > 120 && song.acousticness < 0.4 && song.danceability > 0.5 },
+  { name: 'Sadness', imageSrc: '/moodify-music-app/sadness.png', filter: (song: MusicData) => song.valence < 0.3 && song.energy < 0.4 && song.tempo < 100 && song.acousticness > 0.6 && song.loudness < -8 },
+  { name: 'Anger', imageSrc: '/moodify-music-app/anger.png', filter: (song: MusicData) => song.valence < 0.4 && song.energy > 0.7 && song.loudness < -5 && song.tempo > 110 && song.speechiness > 0.3 },
+  { name: 'Fear', imageSrc: '/moodify-music-app/fear.png', filter: (song: MusicData) => song.valence < 0.5 && song.energy > 0.5 && song.speechiness > 0.2 && song.tempo > 115 },
+  { name: 'Disgust', imageSrc: '/moodify-music-app/disgust.png', filter: (song: MusicData) => song.valence < 0.4 && song.energy < 0.5 && song.acousticness > 0.5 && song.danceability < 0.4 },
 ];
 
 export default function Home() {
@@ -49,7 +49,7 @@ export default function Home() {
           }
         }
         setMusicData(Array.from(uniqueSongsMap.values()));
-      } catch (err: any) {
+      } catch (err: unknown) {
         setError('Failed to load music data.');
         console.error('Error loading data:', err);
       } finally {
@@ -121,7 +121,8 @@ export default function Home() {
                         rel="noopener noreferrer"
                         className="text-purple-600 hover:text-purple-500 flex items-center space-x-1 text-sm"
                       >
-                        <Image src="/spotify-icon.svg" alt="Spotify" width={20} height={20} />
+                        <Image src="/spotify-icon.svg" alt="Spotify" width={16} height={16} />
+                        <span>Open</span>
                       </a>
                     </td>
                   </tr>

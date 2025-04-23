@@ -23,7 +23,7 @@ interface MusicDataRaw { // Interface to match the raw CSV structure
   tempo: string;
   time_signature: string;
   track_genre: string;
-  [key: string]: any;
+  [key: string]: unknown; // Changed 'any' to 'unknown'
 }
 
 interface MusicData { // Interface for your application's use
