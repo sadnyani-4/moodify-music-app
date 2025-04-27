@@ -120,6 +120,9 @@ Moodify lives on Render, a cloud hosting service. Here's the technical breakdown
 3.  A separate Render service is used to deploy the Python/Flask backend.
 4.  Render hosts the static frontend and the dynamic backend.
 
+The app can be accessed via the following link:
+[Live Render Link](https://moodify-app-x011.onrender.com)
+
 ## Contributing
 
 Got a great idea for Moodify? We'd love to hear it! Feel free to contribute by submitting a pull request or opening an issue.
