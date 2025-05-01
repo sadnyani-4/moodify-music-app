@@ -18,7 +18,7 @@ tfidf_vectorizer = None
 song_data_global = None  # To store the song data
 
 # Load the preprocessed data
-csv_file_path = './public/unique_smooongs.csv'
+csv_file_path = './public/unique_songs.csv'
 
 
 def load_data():
