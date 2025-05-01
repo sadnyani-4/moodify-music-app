@@ -4,6 +4,7 @@ import React, { useState, useCallback } from 'react';
 import { AlertCircle } from 'lucide-react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
+import FloatingOrbs from '@/components/FloatingOrbs';
 
 interface Song {
     track_id: string;
@@ -33,11 +34,21 @@ const MoodMusicApp = () => {
     ];
 
     //Inside Out Color Palette
-    const joyColor = '#FDEB4C';          // Yellow
-    const angerColor = '#F2A953';        // Orange-Red
+    const joyColor = '#FDEB4C';         // Yellow
+    const angerColor = '#F2A953';         // Orange-Red
+    const sadnessColor = '#446EB6';       // Blue
+    const fearColor = '#9C6ADE';         // Purple
+    const disgustColor = '#2ecc71';       // Green
     const busSeats = '#2C3E50';
     const longTermMemory = '#D3D3D3';
 
+    const emotionColors = {
+        Joy: joyColor,
+        Sadness: sadnessColor,
+        Anger: angerColor,
+        Fear: fearColor,
+        Disgust: disgustColor,
+    };
 
     const fetchSongs = useCallback(async () => {
         if (!moodText.trim()) {
@@ -48,6 +59,7 @@ const MoodMusicApp = () => {
         setLoading(true);
         setError(null);
         setSongs([]);
+        setSelectedMood(null); // Reset selected mood
 
         try {
             // Send text to Flask for emotion analysis
@@ -103,24 +115,33 @@ const MoodMusicApp = () => {
         }
     }, [moodText]);
 
-
-
     return (
         <div
-            className="min-h-screen p-4 sm:p-8"
+            className="min-h-screen p-4 sm:p-8 relative overflow-hidden"
             style={{
-                backgroundColor: busSeats, // Applying bus seat color
-                color: '#FFFFFF' //Setting default text color to white
+                backgroundColor: busSeats,
+                color: '#FFFFFF'
             }}
         >
-            <div className="max-w-4xl mx-auto space-y-6">
+            {/* Floating Orbs Component */}
+            <FloatingOrbs
+                joyColor={joyColor}
+                sadnessColor={sadnessColor}
+                angerColor={angerColor}
+                fearColor={fearColor}
+                disgustColor={disgustColor}
+                longTermMemoryColor={longTermMemory}
+                numberOfOrbs={80}
+            />
+
+            <div className="max-w-4xl mx-auto space-y-6 relative z-10">
                 <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-center mb-6"
                     style={{
                         color: joyColor, // Joy - Yellow
                         textShadow: '0 0 15px rgba(255, 223, 0, 0.7)', // Add a glow effect
                     }}
                 >
-                    Mood-Based Music Recommender
+                    Moodify
                 </h1>
 
                 <div
@@ -139,14 +160,14 @@ const MoodMusicApp = () => {
                         placeholder="I'm feeling..."
                         value={moodText}
                         onChange={(e) => setMoodText(e.target.value)}
-                        className="bg-black/20 text-white border border-gray-700 min-h-[120px] sm:min-h-[140px] w-full rounded-md p-4 placeholder:text-gray-400
-                        focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300" // Added focus styles
+                        className={`bg-black/20 text-white border min-h-[120px] sm:min-h-[140px] w-full rounded-md p-4 placeholder:text-gray-400
+                                    focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300
+                                    ${selectedMood ? `border-${selectedMood.toLowerCase()}-500` : 'border-gray-700'}`} // Dynamic border color
                         disabled={loading}
                         style={{
                             backgroundColor: 'rgba(0, 0, 0, 0.2)',
                             color: '#FFFFFF',
-                            borderColor: '#4B5563',
-                            boxShadow: 'inset 0 2px 4px rgba(0, 0, 0, 0.1)', // Subtle inset shadow
+                            boxShadow: 'inset 0 2px 4px rgba(0, 0, 0, 0.1)',
                         }}
 
                     />
@@ -155,7 +176,8 @@ const MoodMusicApp = () => {
                         className={
                             loading
                                 ? "mt-4 w-full text-white font-semibold py-2 px-4 rounded-md transition-colors duration-300 cursor-not-allowed"
-                                : "mt-4 w-full text-white font-semibold py-2 px-4 rounded-md transition-colors duration-300 \n                                            hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50" // Added hover and focus
+                                : "mt-4 w-full text-white font-semibold py-2 px-4 rounded-md transition-colors duration-300 \
+                                    hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50" // Added hover and focus
                         }
                         disabled={loading}
                         style={{
@@ -185,9 +207,12 @@ const MoodMusicApp = () => {
                     </div>
                 )}
 
-                {songs.length > 0 && (
-                    <div
+                {songs.length > 0 && selectedMood && (
+                    <motion.div
                         className="bg-white/5 backdrop-blur-md border border-white/10 shadow-lg rounded-lg p-6"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ duration: 0.5 }}
                         style={{
                             backgroundColor: 'rgba(255, 255, 255, 0.05)',
                             borderColor: 'rgba(255, 255, 255, 0.1)',
@@ -195,44 +220,50 @@ const MoodMusicApp = () => {
                         }}
                     >
                         <div className="flex items-center gap-2 mb-4">
-                            {selectedMood && (
-                                <>
-                                    {moodsConfig.find(mood => mood.name === selectedMood)?.imageSrc && (
-                                        <Image
-                                            src={moodsConfig.find(mood => mood.name === selectedMood)!.imageSrc}
-                                            alt={selectedMood}
-                                            width={40}
-                                            height={40}
-                                            className="rounded-full"
-                                        />
-                                    )}
-                                    <span
-                                        className="text-lg sm:text-xl"
-                                        style={{
-                                            color: moodsConfig.find(mood => mood.name === selectedMood)?.color,
-                                            textShadow: `0 0 8px ${moodsConfig.find(mood => mood.name === selectedMood)?.color}`, // Add glow
-                                        }}
-                                    >
-                                        {selectedMood}
-                                    </span>
-                                </>
-                            )}
-                            <span className="text-lg sm:text-xl" style={{ color: longTermMemory }}>Recommended Songs</span>
+                        {moodsConfig.find(mood => mood.name === selectedMood)?.imageSrc && (
+    <motion.div
+        initial={{ scale: 0.8, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1, y: [0, -5, 0] }}
+        transition={{
+            duration: 0.5,
+            ease: 'easeInOut',
+            repeatType: 'loop',
+        }}
+    >
+        <Image
+            src={moodsConfig.find(mood => mood.name === selectedMood)!.imageSrc}
+            alt={selectedMood}
+            width={60} // Reduced width
+            height={60} // Reduced height
+            className="rounded-full"
+            // style={{ width: 'auto', height: 'auto' }} // Added style to address image warning
+        />
+    </motion.div>
+)}
+                            <span
+                                className="text-2xl font-semibold" // Make the mood text more prominent
+                                style={{
+                                    color: moodsConfig.find(mood => mood.name === selectedMood)?.color,
+                                    textShadow: `0 0 10px ${moodsConfig.find(mood => mood.name === selectedMood)?.color}`, // Stronger glow
+                                }}
+                            >
+                                {selectedMood}'s Recommendations
+                            </span>
                         </div>
                         <p className="text-gray-300 mb-4" style={{ color: longTermMemory }}>
-                            Here are some songs that might fit your mood:
+                            Here are some songs that might resonate with how you're feeling:
                         </p>
                         <div className="space-y-4">
-                            {songs.map((song) => {
+                            {songs.map((song, index) => {
                                 const moodColor = selectedMood ? moodsConfig.find(m => m.name === selectedMood)?.color || '#FFFFFF' : '#FFFFFF';
                                 return (
                                     <motion.div
                                         key={song.track_id}
                                         className="p-4 bg-black/20 rounded-md border border-gray-700 text-white flex justify-between items-center
-                                                            transition-all duration-300 hover:scale-[1.02] hover:shadow-lg" // Added hover effects
-                                        initial={{ opacity: 0, x: -20 }}
-                                        animate={{ opacity: 1, x: 0 }}
-                                        transition={{ duration: 0.3 }}
+                                                                        transition-all duration-300 hover:scale-[1.02] hover:shadow-lg" // Added hover effects
+                                        initial={{ opacity: 0, y: 20 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        transition={{ duration: 0.3, delay: index * 0.05 }} // Staggered appearance
                                         style={{
                                             backgroundColor: 'rgba(0, 0, 0, 0.2)',
                                             color: '#FFFFFF',
@@ -250,14 +281,14 @@ const MoodMusicApp = () => {
                                             </p>
                                         </div>
                                         <a
-                                            href={`https://open.spotify.com/track/${song.track_id}`}
+                                            href={`https://open.spotify.com/track/$$${song.track_id}`}
                                             target="_blank"
                                             rel="noopener noreferrer"
                                             className="text-green-400 hover:text-green-300 transition-colors duration-200"
 
                                         >
                                             <Image
-                                                src="/spotify-icon.svg"
+                                                src="/spotify-icon.svg" // Make sure this path is correct for your custom or default icon
                                                 alt="Spotify"
                                                 width={20}
                                                 height={20}
@@ -267,7 +298,7 @@ const MoodMusicApp = () => {
                                 );
                             })}
                         </div>
-                    </div>
+                    </motion.div>
                 )}
             </div>
         </div>
@@ -275,4 +306,3 @@ const MoodMusicApp = () => {
 };
 
 export default MoodMusicApp;
-
