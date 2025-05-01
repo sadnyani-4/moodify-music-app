@@ -63,7 +63,7 @@ const MoodMusicApp = () => {
 
         try {
             // Send text to Flask for emotion analysis
-            const moodResponse = await fetch('http://127.0.0.1:5001/analyze_mood', {
+            const moodResponse = await fetch('https://moodify-backend-e940.onrender.com/analyze_mood', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -83,7 +83,7 @@ const MoodMusicApp = () => {
             if (['Joy', 'Sadness', 'Anger', 'Fear', 'Disgust'].includes(emotion)) {
                 setSelectedMood(emotion);
                 // Fetch songs from Flask based on the detected emotion
-                const songsResponse = await fetch(`http://127.0.0.1:5001/get_songs/${emotion}`);
+                const songsResponse = await fetch(`https://moodify-backend-e940.onrender.com/get_songs/${emotion}`);
                 if (!songsResponse.ok) {
                     throw new Error(`Failed to fetch songs: ${songsResponse.status} ${songsResponse.statusText}`);
                 }
