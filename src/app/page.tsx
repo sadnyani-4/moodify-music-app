@@ -42,13 +42,13 @@ const MoodMusicApp = () => {
     const busSeats = '#2C3E50';
     const longTermMemory = '#D3D3D3';
 
-    const emotionColors = {
-        Joy: joyColor,
-        Sadness: sadnessColor,
-        Anger: angerColor,
-        Fear: fearColor,
-        Disgust: disgustColor,
-    };
+    // const emotionColors = {
+    //     Joy: joyColor,
+    //     Sadness: sadnessColor,
+    //     Anger: angerColor,
+    //     Fear: fearColor,
+    //     Disgust: disgustColor,
+    // };
 
     const fetchSongs = useCallback(async () => {
         if (!moodText.trim()) {
@@ -101,7 +101,7 @@ const MoodMusicApp = () => {
                 }
             }
             else {
-                setError("Sorry, we can only process Joy, Sadness, Anger, Fear, and Disgust.  Please try again.")
+                setError("Sorry, we can only process Joy, Sadness, Anger, Fear, and Disgust. &nbsp;Please try again.")
             }
 
         } catch (err) { // Changed from err: any to err
@@ -247,11 +247,11 @@ const MoodMusicApp = () => {
                                     textShadow: `0 0 10px ${moodsConfig.find(mood => mood.name === selectedMood)?.color}`, // Stronger glow
                                 }}
                             >
-                                {selectedMood}'s Recommendations
+                                {selectedMood}&apos;s Recommendations
                             </span>
                         </div>
                         <p className="text-gray-300 mb-4" style={{ color: longTermMemory }}>
-                            Here are some songs that might resonate with how you're feeling:
+                            Here are some songs that might resonate with how you&apos;re feeling:
                         </p>
                         <div className="space-y-4">
                             {songs.map((song, index) => {

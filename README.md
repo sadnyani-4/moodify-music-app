@@ -130,3 +130,9 @@ Got a great idea for Moodify? We'd love to hear it! Feel free to contribute by s
 ## Author
 
 Sadnyani
+
+# things to fix (for personal progress)
+
+- fix backend
+- favicon
+- change tab name
